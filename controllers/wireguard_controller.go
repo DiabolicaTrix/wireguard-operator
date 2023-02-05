@@ -410,11 +410,11 @@ ListenPort = 51820
 
 	dns := "1.1.1.1"
 	kubeDnsService := &corev1.Service{}
-	err = r.Get(ctx, types.NamespacedName{Name: "kube-dns", Namespace: "kube-system"}, kubeDnsService)
+	err = r.Get(ctx, types.NamespacedName{Name: "coredns", Namespace: "kube-system"}, kubeDnsService)
 	if err == nil {
 		dns = fmt.Sprintf("%s, %s.svc.cluster.local", kubeDnsService.Spec.ClusterIP, wireguard.Namespace)
 	} else {
-		log.Error(err, "Unable to get kube-dns service")
+		log.Error(err, "Unable to get coredns service")
 	}
 
 	err = r.Get(ctx, types.NamespacedName{Name: wireguard.Name + "-svc", Namespace: wireguard.Namespace}, svcFound)
